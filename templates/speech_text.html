@@ -1,0 +1,77 @@
+{% extends "layout.html" %} 
+{% block main %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link href="static/css/style.css" rel="stylesheet" type="text/css">
+  <link href="static/css/media-queries.css" rel="stylesheet" type="text/css">
+  <link href="static/css/nav.css" rel="stylesheet" type="text/css">
+  <link href="static/css/record.css" rel="stylesheet" type="text/css">
+  <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  <script src="/static/js/app.js"></script>
+</head>
+<div class="title">
+  <h1>EMOTION RECOGNITION FROM SPEECH </h1>
+</div>
+
+<div class="container">
+  <!-- <h3>Recording:</h3> -->
+  <div style="color:red">Recording:</div>
+  <div id="controls">
+  <button id="recordButton">Record</button>
+  <button id="pauseButton" disabled>Pause</button>
+  <button id="stopButton" disabled>Stop</button>
+  </div>
+  <div id="formats">Format: start recording with sample length > 0.3 seconds</div>
+  <p style="font-size: 80%;">File Recording:</p>
+  <ol id="recordingsList"></ol>
+  <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+  <script src="static/js/app.js"></script>
+
+    <form class="form-group" action="/uploaded" method='post' enctype="multipart/form-data">
+      <!-- <h3>Upload File Speech</h3> -->
+      <div style="color:red">Upload File:</div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <span class="btn btn-default btn-file">
+          Choose file record from Computer:
+          <input type="file" id="imgInp" name="file" required="true">
+          </span>
+        </span>
+      </div>
+      <br/>
+      <button type="reset" class="btn btn-primary">
+        <i class="fa fa-eraser"></i> Clear
+      </button>
+      <button type="submit" class="btn btn-info">
+        <i class="fa fa-database"></i> Submit
+      </button>
+    </div>
+    </form>
+  <br>
+
+  <div class="model">
+    <div class="alert alert-success" role="alert">
+      <!-- <h3>EMOTION RECOGNITION</h3> -->
+      <p class="alert-heading"><strong>Emotion recognition:</strong></p>
+      <div class ='color_output'>
+        {{predictions}}
+      </div>
+      <br />
+      <p class="alert-heading"><strong>Accuracy prediction:</strong></p>
+      <div class ='color_output'>
+        {{acc}}
+      </div>
+      <br />
+    </div>
+  </div>
+</div>
+<br />
+<footer class="small text-center text-muted"></footer>
+{% endblock %}

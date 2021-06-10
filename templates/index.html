@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8">
+
+<!-- disable iPhone scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>SPEECH EMOTION RECOGNITION</title>
+<meta name="description" content="Upload 1 file mp3 or wav english represent for speech of one people, system will preprocess and analys to emotion recognition contained in speech ">
+<!-- main css -->
+<link href="static/css/style.css" rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="static/css/media-queries.css" rel="stylesheet" type="text/css">
+<!-- html5.js for IE less than 9 -->
+<script  src="static/prefixfree/1-0-7/prefixfree.dynamic-dom.min.js"></script>
+
+<!-- me add -->
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+
+<!-- jQuery -->
+<script src="static/ajax/libs/jquery/1-10-2/jquery.min.js"></script>
+<script src="static/ajax/libs/jqueryui/1-8/jquery-ui.min.js"></script>
+<script src="static/js/jsapi.js"></script>
+<script  src="static/js/main.js"></script>
+<!-- Google Analytics tracking code -->
+<!-- <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-48354920-1', 'lubax.com');
+  ga('send', 'pageview');
+</script> -->
+<!-- <style>
+	#logo{
+		display: inline;
+		float: left;
+		width: 200px;
+		height: 120px;
+		margin:0px;
+		padding:0px;
+		/* background: url(img/logo_SER.png) no-repeat center 15px; */
+	}
+</style> -->
+</head>
+<body>
+<div id="pagewrap" data-nav="home">
+	<header id="header">
+		<div id="header-center">
+			<!-- <a src='./static/css/img/dlogo_SER.png' id = 'logo' href="#" title=" Home"></a> -->
+			<!-- <a id="site-logo" href="#" title=" Home"></a> -->
+			<nav>
+				<ul id="main-nav">
+					<li><a href="#about" class="nav">About Us</a></li>
+					<li><a href="#how" class="nav">How it Works</a></li>
+					<li><a href="#database" class="database">Database</a> </li>
+					<li><a href="#news" class="nav">News</a> </li>
+					<li><a href="#contact" class="nav">Contact</a></li>
+				</ul>
+				<!-- /#main-nav --> 
+			</nav>
+		</div>
+	</header>
+	<!-- /#header -->
+	<div id="content">
+		<div id="panel1">
+			<div id="panel1-inside">
+				<div id="panel1-right">
+					<h1>Introducing a web-based speech emotion recognitions</h1>
+					<div class="panel1-sq" id="sq3">
+						<div class="pic-icon sq-icon"></div>
+						<div class="sq-title"><a href="/speech">Identify</a></div>
+					</div>
+					<div class="clearfix"></div>
+					<h2>
+						Lets you speech emotion recognition by speech file and sentences represent for speech. Just take a signal speech and sentences so our app will speech recognition (happy, sad, neutral, angry).
+					</h2>
+				</div>
+				<a class="pic-icon down1 nav" href="#about"></a>
+			</div>
+		</div>
+		<!-- /#panel1 --> 
+		<div id="panel2" data-nav="about">
+			<h3 class="center-title">About Us</h3>
+			<div class="panel-inside">
+				<div class="panel2-sq" id="sq1">
+					<div class="pic-icon sq-icon"></div>
+					<div class="sq-text">
+						this web-app helps you quickly speech emotion recognition from speech or text.This is capitalizing on fact that voice often reflects underlying emotion through tone and pitch. Although SER is tough because emotion are subjective and annotating audio is challenging.
+					</div>
+				</div>
+				<div class="panel2-sq" id="sq2">
+					<div class="pic-icon sq-icon"></div>
+					<div class="sq-text">
+						this web-app is designed to be more than a one-emotion recognition app. We are developing and will have a lot of applications in practice such as : in human-machine interaction, in smart switchboards voice emotion recognition helps detect potential problems that appear from customer dissatisfaction.
+					</div>
+				</div>
+				<div class="panel2-sq" id="sq3">
+					<div class="pic-icon sq-icon"></div>
+					<div class="sq-text">
+						Our aim is to provide a simple, inexpensive software system to identify speech emotion using a web-app-based platform.
+					</div>
+				</div>
+				<div class="panel2-sq" id="sq4" style="margin-right: 0">
+					<div class="pic-icon sq-icon"></div>
+					<div class="sq-text">
+						We are currently expanding our database and algorithm. As our database grows, this web-app will recognize more and more emotions. And the desire to recognize Vietnamese voice emotions. Since then, bringing Vietnam's science and technology industry to a new level.
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<a id="panel2-down" class="pic-icon down2 nav" href="#how"></a>
+		</div>
+		<!-- /#panel2 --> 
+		<div id="panel3" data-nav="how">
+			<h3 class="center-title">How it Works</h3>
+			<div class="panel-inside">
+				<div id="panel3-sq1">
+					<h3>The Algorithm</h3>
+					<div id="sq3-text">
+						The algorithm works based on deep learning network architecture combined with attention mechanism to recognize emotions with the highest accuracy.
+					</div>
+				</div>
+				<img id="panel3-sq2" src="./static/images/algorithm.png" class="panel-img" alt="Lubax Alorithm"/>
+				<div class="clearfix"></div>
+			</div>
+			<a class="pic-icon down1 nav" href="#database"></a>
+		</div>
+		<!-- /#panel3 --> 
+		<div id="panel4" data-nav="database">
+			<h3 class="center-title">The Database</h3>
+			<div class="panel-inside">
+				<img id="panel4-sq1" src="./static/images/dataset.png" class="panel-img"  alt="Lubax Database"/>
+				<div id="panel4-sq2">
+					<p>The Interactive Emotional Dyadic Motion Capture (IEMOCAP) database is an acted, multimodal and multispeaker database, recently collected at SAIL lab at USC.</p>
+					<p>It contains approximately 12 hours of audiovisual data, including video, speech, motion capture of face, text transcriptions.</p>
+					<p>IEMOCAP database is annotated by multiple annotators into categorical labels, such as anger, happiness, sadness, neutrality, as well as dimensional labels such as valence, activation and dominance.</p>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<a class="pic-icon down2 nav" href="#news"></a>
+		</div>
+		<!-- /#panel4 
+		<div id="panel5" data-nav="platform">
+			<h3 class="center-title">The Platform</h3>
+			<div class="panel-inside">
+				<div id="panel5-sq1">
+					<div id="sq5-text">
+						A smartphone or tablet is the ideal platform for Lūbax.  The clinician does not need to obtain expensive hardware solutions or worry about expensive per-use charges per patient.  Lūbax is a simple, inexpensive system to identify skin lesions using a smartphone and tablet based platforms.
+					</div>
+				</div>
+				<img id="panel5-sq2" src="images/platforms.png" class="panel-img" alt="Lubax Platform"/>
+				<div class="clearfix"></div>
+			</div>
+			<a class="pic-icon down1 nav" href="#team"></a>
+		</div>
+		 /#panel5 --> 
+		<!-- /#panel6 --> 
+		<div id="panel8" data-nav="news">
+			<h3 class="center-title">News</h3>
+			<div class="panel-inside">
+			<p class="center-title">New updates coming soon!</p>
+			</div>
+			<a class="pic-icon down2 nav" href="#contact"></a>
+		</div>
+		<!-- /#panel8 --> 
+		<div id="panel7" data-nav="contact">
+			<h3 class="center-title">Contact</h3>
+			<div class="panel-inside">
+				<div id="sq1">
+					<h4>Telephone:</h4>
+					<div class="panel7-adr"> Website: https://viblo.asia/u/tructt2<br/>
+						+84 69224293<br/>
+						tieuthu.anninh@gmail.com<br/>
+					</div>
+				</div>
+				<div id="sq2">
+					<h4>Sign up to be notified of our Clinical Trial release for Phone.</h4>
+					<div id="signup_form">
+						<input type="text" spellcheck="false" id="name" tabindex="1" placeholder="Your Name">
+						<input type="text" spellcheck="false" id="email" tabindex="2" placeholder="Your Email">
+						<input type="text" spellcheck="false" id="message" tabindex="2" placeholder="Message ">
+						<a href="#" id="submit">Submit</a>
+					</div>
+					<div id="signup_done">
+						Thanks for signing up! We'll be in touch soon.
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<a class="pic-icon home nav" href="#home"></a>
+			</div>
+		</div>
+		<!-- /#panel7 --> 
+	</div>
+	<!-- /#content --> 
+	<footer id="footer">
+		&copy; 2020, Inc. All rights reserved
+		<p>Trần Trung Trực - ĐHBK Đà Nẵng</p>
+		<div class="panel-inside">
+			The web application is made by Tran Trung Truc, if you have any questions, please contact details in the contact section.
+		</p>
+	</footer>
+	<!-- /#footer --> 
+</div>
+<!-- /#pagewrap -->
+</body>
+</html>
