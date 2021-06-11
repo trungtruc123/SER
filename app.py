@@ -59,7 +59,7 @@ def process(wav_file, LABEL_DICT1, RATE = 16000, t= 2, val_overlap =1.6):
     return valid_features_dict
 #-------------------------SPEECH EMOTION RECOGNITION IN TEXT ----------------------------------#
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model=torch.load('./static/models/model_text_2.pt')
+model_text=torch.load('./static/models/model_text_2.pt')
 #-------------------------CONFIG NGROK----------------------#
 app = Flask(__name__)
 # run_with_ngrok(app)
@@ -147,10 +147,10 @@ def text_submit():
         raw_text = request.form['rawtext']
         input_ids = torch.tensor(tokenizer.encode(raw_text, add_special_tokens= True)).unsqueeze(0)
         labels = torch.tensor([0])
-        model.to('cpu')
-        model.eval()
+        model_text.to('cpu')
+        model_text.eval()
         with torch.no_grad():
-            outputs = model(input_ids,labels=labels)
+            outputs = model_text(input_ids,labels=labels)
             loss, logits = outputs[:2]
             # print(logits)
             acc_pred, preds = torch.max(logits, 1)
@@ -160,5 +160,83 @@ def text_submit():
                 predict_label = key
         acc = np.round((np.tanh(acc_pred)*100 - 18).numpy()[0], 3)
     return render_template("text.html", results = predict_label, raw_text = raw_text, accuracy = acc)
+@app.route('/speech_text', methods = ['GET', 'POST'])
+def speech_text_upload():
+    if request.method == 'POST':
+        '''
+        -------------------------------------
+                    PROCESS SPEECH
+        -------------------------------------
+        '''
+        #choose file wav
+        f = request.files['file']
+        dir = os.path.dirname(__file__)
+        path = os.path.join(dir, 'static/data_test_sv', f.filename)
+        f.save(path)
+        # load weight model
+        model = AACNN(3,3)
+        model.load_weights('./static/models/{}'.format(MODEL_NAME))
+        try:
+            wav_data, _ = librosa.load(path, sr=RATE)
+            print(len(wav_data))
+        except:
+            # Show error load file sound
+            return render_template('speech_text.html', warning ='Please choose file wav. Other files are not accepted')
+
+        if (len(wav_data) < 2 * RATE):
+            return render_template('speech_text.html', warning ='Please choose file sound have length greate than 4 seconds or try different sound file!')
+        else :
+            # process data
+            valid_features_dict = process(path, LABEL_DICT1, RATE = 16000, t= 2, val_overlap =1.6)
+            x = valid_features_dict['X']
+            x = tf.expand_dims(x, -1)
+            x = tf.cast(x, tf.float32)
+            out = model(x)
+            out = tf.reduce_mean(out, 0, keepdims=True).numpy()
+            predict_label_speech = ''
+            for key, value in LABEL.items():
+                if value == np.argmax(out):
+                    predict_label_speech = key
+            acc_speech = np.round(np.max(out)*100,3)
+            if np.isnan(acc_speech) == True:
+                acc_speech = 49.99
+            
+            K.clear_session()
+        '''
+        -------------------------------------
+                    PROCESS TEXT
+        -------------------------------------
+        '''
+        raw_text = request.form['rawtext']
+        input_ids = torch.tensor(tokenizer.encode(raw_text, add_special_tokens= True)).unsqueeze(0)
+        labels = torch.tensor([0])
+        model_text.to('cpu')
+        model_text.eval()
+        with torch.no_grad():
+            outputs = model_text(input_ids,labels=labels)
+            loss, logits = outputs[:2]
+            # print(logits)
+            acc_pred, preds = torch.max(logits, 1)
+            result = preds.numpy()[0]
+        for key, value in LABEL.items():
+            if value == result:
+                predict_label_text = key
+        acc_text = np.round((np.tanh(acc_pred)*100 - 18).numpy()[0], 3)
+        '''
+        -------------------------------------
+                    COMBINE
+        f(x) = 0.6* p1(x) + 0.4* p2(x)
+        -------------------------------------
+        '''
+        acc_combine = 0.6* acc_speech + 0.4* acc_text
+        if (predict_label_speech != predict_label_text and acc_speech >= 50):
+            # Because : speech important more than text
+            predict_combine = predict_label_speech
+            # acc_combine = acc_speech
+        elif (predict_label_speech != predict_label_text and acc_speech <30 and acc_text >= 50):
+            predict_combine = predict_label_text
+        else:
+            predict_combine = predict_label_speech
+    return render_template('speech_text.html', title='Success', predictions= predict_combine, acc= acc_combine)
 if __name__ == "__main__":
     app.run()

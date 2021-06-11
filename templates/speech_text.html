@@ -17,7 +17,7 @@
   <script src="/static/js/app.js"></script>
 </head>
 <div class="title">
-  <h1>EMOTION RECOGNITION FROM SPEECH </h1>
+  <h1>EMOTION RECOGNITION COMBINE SPEECH AND TEXT </h1>
 </div>
 
 <div class="container">
@@ -28,23 +28,20 @@
   <button id="pauseButton" disabled>Pause</button>
   <button id="stopButton" disabled>Stop</button>
   </div>
-  <div id="formats">Format: start recording with sample length > 0.3 seconds</div>
+  <div id="formats">Format: start recording with sample length > 4 seconds. For best results usually: 4s to 10s</div>
   <p style="font-size: 80%;">File Recording:</p>
   <ol id="recordingsList"></ol>
   <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
   <script src="static/js/app.js"></script>
 
-    <form class="form-group" action="/uploaded" method='post' enctype="multipart/form-data">
+    <form class="form-group" action="/speech_text" method='post' enctype="multipart/form-data">
       <!-- <h3>Upload File Speech</h3> -->
       <div style="color:red">Upload File:</div>
-      <div class="input-group">
-        <span class="input-group-btn">
-          <span class="btn btn-default btn-file">
-          Choose file record from Computer:
-          <input type="file" id="imgInp" name="file" required="true">
-          </span>
-        </span>
-      </div>
+      <label>Choose file record from Computer</label>
+      <input type="file" id="imgInp" name="file" required="true">
+      <br/>
+      <label>Put sentences represent for speech at here</label>
+      <textarea type="text" rows="2" cols="5" class="form-control"  name="rawtext" required="true"></textarea>
       <br/>
       <button type="reset" class="btn btn-primary">
         <i class="fa fa-eraser"></i> Clear
@@ -58,6 +55,9 @@
 
   <div class="model">
     <div class="alert alert-success" role="alert">
+      <div>
+        <p class='warning' style ='color: red;'>{{warning}}</p>
+      </div>
       <!-- <h3>EMOTION RECOGNITION</h3> -->
       <p class="alert-heading"><strong>Emotion recognition:</strong></p>
       <div class ='color_output'>
